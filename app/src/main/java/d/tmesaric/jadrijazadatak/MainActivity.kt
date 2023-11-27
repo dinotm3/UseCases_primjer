@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             viewModel.state.collect { state ->
                 Log.d("MainActivity", "Observed data: ${state.zadaci}")
-                val adapter = ZadatakAdapter(state.zadaci)
+                adapter = ZadatakAdapter(state.zadaci)
                 Log.d("TAG", viewModel.state.value.zadaci.toString())
                 rvZadatak.adapter = adapter
 
