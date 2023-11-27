@@ -12,19 +12,20 @@ class GetZadaciUseCase(
     private val repository: ZadatakRepository
 ) {
 
-    operator fun invoke(zadatakOrder: ZadatakOrder = ZadatakOrder.Date(OrderType.Descending)
+    operator fun invoke(
+        zadatakOrder: ZadatakOrder = ZadatakOrder.Date(OrderType.Descending)
     ): Flow<List<Zadatak>> {
-        return repository.getZadaci().map {zadaci ->
-            when(zadatakOrder.orderType) {
+        return repository.getZadaci().map { zadaci ->
+            when (zadatakOrder.orderType) {
                 is OrderType.Ascending -> {
-                    when(zadatakOrder) {
+                    when (zadatakOrder) {
                         is ZadatakOrder.Name -> zadaci.sortedBy { it.title.lowercase() }
                         is ZadatakOrder.Date -> zadaci.sortedBy { it.timestamp }
                     }
                 }
 
                 is OrderType.Descending -> {
-                    when(zadatakOrder) {
+                    when (zadatakOrder) {
                         is ZadatakOrder.Name -> zadaci.sortedByDescending { it.title.lowercase() }
                         is ZadatakOrder.Date -> zadaci.sortedByDescending { it.timestamp }
                     }

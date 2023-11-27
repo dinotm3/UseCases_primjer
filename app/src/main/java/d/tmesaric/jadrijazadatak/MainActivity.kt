@@ -1,6 +1,7 @@
 package d.tmesaric.jadrijazadatak
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,8 +20,7 @@ import d.tmesaric.jadrijazadatak.presentation.ZadatakViewModel
 import d.tmesaric.jadrijazadatak.presentation.recycler_view.ZadatakAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.Date
-import java.time.LocalDateTime
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -38,7 +38,12 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.state.collect { state ->
                 Log.d("MainActivity", "Observed data: ${state.zadaci}")
-                adapter = ZadatakAdapter(state.zadaci)
+                adapter = ZadatakAdapter(state.zadaci) {zadatak ->
+                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+                    intent.putExtra("zadatak", zadatak)
+                    startActivity(intent)
+
+                }
                 Log.d("TAG", viewModel.state.value.zadaci.toString())
                 rvZadatak.adapter = adapter
             }

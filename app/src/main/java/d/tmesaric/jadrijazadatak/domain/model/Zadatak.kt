@@ -2,6 +2,7 @@ package d.tmesaric.jadrijazadatak.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
 data class Zadatak(
@@ -11,6 +12,6 @@ data class Zadatak(
     val content: String,
     val timestamp: Long,
     val isComplete: Boolean = false
-)
+) : Serializable
 
 class InvalidZadatakException(message: String): Exception(message)

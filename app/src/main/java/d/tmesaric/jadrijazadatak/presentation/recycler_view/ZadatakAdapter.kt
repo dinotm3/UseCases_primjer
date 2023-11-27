@@ -3,6 +3,7 @@ package d.tmesaric.jadrijazadatak.presentation.recycler_view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,8 @@ import d.tmesaric.jadrijazadatak.R
 import d.tmesaric.jadrijazadatak.domain.model.Zadatak
 
 class ZadatakAdapter(
-    var zadaci: List<Zadatak>
+    var zadaci: List<Zadatak>,
+    private val onItemClick: (Zadatak) -> Unit
 ) : RecyclerView.Adapter<ZadatakAdapter.ZadatakViewHolder>() {
 
     inner class ZadatakViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -23,8 +25,13 @@ class ZadatakAdapter(
     override fun onBindViewHolder(holder: ZadatakViewHolder, position: Int) {
         holder.itemView.apply {
             findViewById<TextView>(R.id.tv_title).text = zadaci[position].title
-            findViewById<CheckBox>(R.id.cb_completed).isChecked = zadaci[position].isComplete
+            findViewById<Button>(R.id.btnDelete)
+
+            setOnClickListener {
+                onItemClick.invoke(zadaci[position])
+            }
         }
+
     }
 
     override fun getItemCount(): Int {
