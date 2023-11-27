@@ -18,6 +18,7 @@ import d.tmesaric.jadrijazadatak.presentation.ZadatakEvent
 import d.tmesaric.jadrijazadatak.presentation.ZadatakViewModel
 import d.tmesaric.jadrijazadatak.presentation.recycler_view.ZadatakAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.Date
 import java.time.LocalDateTime
 
@@ -34,13 +35,12 @@ class MainActivity : AppCompatActivity() {
         val rvZadatak = findViewById<RecyclerView>(R.id.rvZadatak)
         val btnAddZadatak = findViewById<Button>(R.id.btnAddZadatak)
 
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch {
             viewModel.state.collect { state ->
                 Log.d("MainActivity", "Observed data: ${state.zadaci}")
                 adapter = ZadatakAdapter(state.zadaci)
                 Log.d("TAG", viewModel.state.value.zadaci.toString())
                 rvZadatak.adapter = adapter
-
             }
         }
 
