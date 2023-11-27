@@ -38,16 +38,15 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.state.collect { state ->
-                Log.d("MainActivity", "Observed data: ${state.zadaci}")
                 adapter = ZadatakAdapter(state.zadaci,
                     { zadatak ->
                     val intent = Intent(this@MainActivity, DetailsActivity::class.java)
                     intent.putExtra("zadatak", zadatak)
                     startActivity(intent) },
 
-                    { zadatak ->
-                        viewModel.onEvent(ZadatakEvent.DeleteZadatak(zadatak)) })
+                    { zadatak -> viewModel.onEvent(ZadatakEvent.DeleteZadatak(zadatak))},
 
+                )
                 rvZadatak.adapter = adapter
             }
         }
@@ -73,9 +72,9 @@ class MainActivity : AppCompatActivity() {
                 val title = etTitle.text.toString()
                 val content = etContent.text.toString()
                 val zadatak = Zadatak(null, title, content, System.currentTimeMillis(), false)
+                adapter.zadaci = adapter.zadaci + zadatak
                 viewModel.onEvent(ZadatakEvent.AddZadatak(zadatak))
                 adapter.notifyItemInserted(adapter.zadaci.size - 1)
-                Log.d("TAG", adapter.zadaci.toString())
 
             }
             .setNegativeButton("Cancel") { dialog, which ->

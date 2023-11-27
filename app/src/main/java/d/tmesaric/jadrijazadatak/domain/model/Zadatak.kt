@@ -11,7 +11,7 @@ data class Zadatak(
     val title: String,
     val content: String,
     val timestamp: Long,
-    val isComplete: Boolean = false
+    var isComplete: Boolean = false
 ) : Serializable
 
 class InvalidZadatakException(message: String): Exception(message)
