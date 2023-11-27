@@ -1,5 +1,6 @@
 package d.tmesaric.jadrijazadatak.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
@@ -25,6 +26,7 @@ class ZadatakViewModel @Inject constructor(
     init {
         getZadaci(ZadatakOrder.Date(OrderType.Descending))
     }
+
     fun onEvent(event: ZadatakEvent) {
         when (event) {
             is ZadatakEvent.Order -> {
@@ -65,6 +67,7 @@ class ZadatakViewModel @Inject constructor(
                     zadaci = zadaci,
                     zadatakOrder = zadatakOrder
                 )
+                Log.d("TAG", "Emitted data: $zadaci")
             }
             .launchIn(viewModelScope)
     }

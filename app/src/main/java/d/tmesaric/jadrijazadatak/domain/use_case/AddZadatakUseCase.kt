@@ -1,5 +1,6 @@
 package d.tmesaric.jadrijazadatak.domain.use_case
 
+import android.util.Log
 import d.tmesaric.jadrijazadatak.domain.model.InvalidZadatakException
 import d.tmesaric.jadrijazadatak.domain.model.Zadatak
 import d.tmesaric.jadrijazadatak.domain.repository.ZadatakRepository
@@ -10,7 +11,7 @@ class AddZadatakUseCase(
 
     @Throws(InvalidZadatakException::class)
     suspend operator fun invoke(zadatak: Zadatak) {
-        if(zadatak.name.isBlank()){
+        if(zadatak.title.isBlank()){
             throw InvalidZadatakException("Zadatak name can not be empty")
         }
 
@@ -18,6 +19,7 @@ class AddZadatakUseCase(
             throw InvalidZadatakException("Zadatak content can not be empty")
 
         }
+        Log.d("TAG", "use case: $zadatak")
         repository.insertZadatak(zadatak)
     }
 }

@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class Zadatak(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val name: String,
+    val id: Int? = null,
+    val title: String,
     val content: String,
     val timestamp: Long,
     val isComplete: Boolean = false
