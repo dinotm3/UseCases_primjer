@@ -12,7 +12,9 @@ import d.tmesaric.jadrijazadatak.domain.model.Zadatak
 
 class ZadatakAdapter(
     var zadaci: List<Zadatak>,
-    private val onItemClick: (Zadatak) -> Unit
+    private val onItemClick: (Zadatak) -> Unit,
+    private var onButtonClick: (Zadatak) -> Unit
+
 ) : RecyclerView.Adapter<ZadatakAdapter.ZadatakViewHolder>() {
 
     inner class ZadatakViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -25,16 +27,23 @@ class ZadatakAdapter(
     override fun onBindViewHolder(holder: ZadatakViewHolder, position: Int) {
         holder.itemView.apply {
             findViewById<TextView>(R.id.tv_title).text = zadaci[position].title
-            findViewById<Button>(R.id.btnDelete)
+            val btnDelete = findViewById<Button>(R.id.btnDelete)
 
             setOnClickListener {
                 onItemClick.invoke(zadaci[position])
             }
-        }
 
+            btnDelete.setOnClickListener {
+                onButtonClick.invoke(zadaci[position])
+            }
+        }
     }
 
     override fun getItemCount(): Int {
         return zadaci.size
+    }
+
+    fun setOnButtonClickListener(listener: (Zadatak) -> Unit) {
+        onButtonClick = listener
     }
 }

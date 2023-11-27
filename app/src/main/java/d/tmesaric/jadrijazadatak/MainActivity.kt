@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import d.tmesaric.jadrijazadatak.domain.model.Zadatak
 import d.tmesaric.jadrijazadatak.presentation.ZadatakEvent
 import d.tmesaric.jadrijazadatak.presentation.ZadatakViewModel
+import d.tmesaric.jadrijazadatak.DetailsActivity
 import d.tmesaric.jadrijazadatak.presentation.recycler_view.ZadatakAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,13 +39,15 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.state.collect { state ->
                 Log.d("MainActivity", "Observed data: ${state.zadaci}")
-                adapter = ZadatakAdapter(state.zadaci) {zadatak ->
+                adapter = ZadatakAdapter(state.zadaci,
+                    { zadatak ->
                     val intent = Intent(this@MainActivity, DetailsActivity::class.java)
                     intent.putExtra("zadatak", zadatak)
-                    startActivity(intent)
+                    startActivity(intent) },
 
-                }
-                Log.d("TAG", viewModel.state.value.zadaci.toString())
+                    { zadatak ->
+                        viewModel.onEvent(ZadatakEvent.DeleteZadatak(zadatak)) })
+
                 rvZadatak.adapter = adapter
             }
         }
