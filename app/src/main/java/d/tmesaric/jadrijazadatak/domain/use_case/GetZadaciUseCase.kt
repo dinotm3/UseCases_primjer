@@ -10,7 +10,9 @@ import kotlinx.coroutines.flow.map
 
 class GetZadaciUseCase(
     private val repository: ZadatakRepository
-) {
+) : UseCase<GetZadaciUseCase.Params, Flow<List<Zadatak>>>() {
+
+    data class Params(val param: String)
 
     operator fun invoke(
         zadatakOrder: ZadatakOrder = ZadatakOrder.Date(OrderType.Descending)
@@ -31,6 +33,15 @@ class GetZadaciUseCase(
                     }
                 }
             }
+        }
+    }
+
+    override suspend fun run(params: Params): Result<Flow<List<Zadatak>>> {
+        return try {
+            val result = invoke()
+            Result.Success(result)
+        } catch (e: Exception) {
+            Result.Error(e)
         }
     }
 }

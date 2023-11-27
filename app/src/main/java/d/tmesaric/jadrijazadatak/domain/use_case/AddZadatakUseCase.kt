@@ -19,7 +19,6 @@ class AddZadatakUseCase(
             throw InvalidZadatakException("Zadatak content can not be empty")
 
         }
-        Log.d("TAG", "use case: $zadatak")
         repository.insertZadatak(zadatak)
     }
 }

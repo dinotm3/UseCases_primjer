@@ -5,8 +5,18 @@ import d.tmesaric.jadrijazadatak.domain.repository.ZadatakRepository
 
 class DeleteZadatakUseCase(
     private val repository: ZadatakRepository
-) {
+) : UseCase<DeleteZadatakUseCase, Unit>() {
+
     suspend operator fun invoke(zadatak: Zadatak) {
         repository.deleteZadatak(zadatak)
+    }
+
+    override suspend fun run(params: DeleteZadatakUseCase): Result<Unit> {
+        return try {
+            invoke(params)
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
     }
 }

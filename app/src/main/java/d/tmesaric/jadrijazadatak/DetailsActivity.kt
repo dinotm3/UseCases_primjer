@@ -24,13 +24,18 @@ class DetailsActivity : AppCompatActivity() {
         val cbDetailsComplete: CheckBox = findViewById(R.id.cbDetailsComplete)
         val zadatak: Zadatak? = intent.getSerializableExtra("zadatak", Zadatak::class.java)
 
-        tvDetailsTitle.text = zadatak?.title
-        tvDetailsContent.text = zadatak?.content
-        cbDetailsComplete.isChecked = zadatak?.isComplete!!
+        try {
+            tvDetailsTitle.text = zadatak?.title
+            tvDetailsContent.text = zadatak?.content
+            cbDetailsComplete.isChecked = zadatak?.isComplete!!
 
-        cbDetailsComplete.setOnCheckedChangeListener { _, isChecked ->
-            zadatak.isComplete = isChecked
-            viewModel.onEvent(ZadatakEvent.AddZadatak(zadatak))
+            cbDetailsComplete.setOnCheckedChangeListener { _, isChecked ->
+                zadatak.isComplete = isChecked
+                viewModel.onEvent(ZadatakEvent.AddZadatak(zadatak))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            finish()
         }
     }
 }
