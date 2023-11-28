@@ -16,7 +16,7 @@ class ZadatakAdapter(
     private val onItemClick: (Zadatak) -> Unit,
     private val onButtonClick: (Zadatak) -> Unit,
 
-) : RecyclerView.Adapter<ZadatakAdapter.ZadatakViewHolder>() {
+    ) : RecyclerView.Adapter<ZadatakAdapter.ZadatakViewHolder>() {
 
     inner class ZadatakViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

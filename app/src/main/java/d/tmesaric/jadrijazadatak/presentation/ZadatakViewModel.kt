@@ -68,7 +68,6 @@ class ZadatakViewModel @Inject constructor(
                     zadaci = zadaci,
                     zadatakOrder = zadatakOrder
                 )
-                Log.d("TAG", "Emitted data: $zadaci")
             }
             .launchIn(viewModelScope)
     }

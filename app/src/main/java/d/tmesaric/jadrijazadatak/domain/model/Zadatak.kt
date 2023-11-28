@@ -14,4 +14,4 @@ data class Zadatak(
     var isComplete: Boolean = false
 ) : Serializable
 
-class InvalidZadatakException(message: String): Exception(message)
+class InvalidZadatakException(message: String) : Exception(message)

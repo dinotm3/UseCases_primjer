@@ -11,11 +11,11 @@ class AddZadatakUseCase(
 
     @Throws(InvalidZadatakException::class)
     suspend operator fun invoke(zadatak: Zadatak) {
-        if(zadatak.title.isBlank()){
+        if (zadatak.title.isBlank()) {
             throw InvalidZadatakException("Zadatak name can not be empty")
         }
 
-        if (zadatak.content.isBlank()){
+        if (zadatak.content.isBlank()) {
             throw InvalidZadatakException("Zadatak content can not be empty")
 
         }

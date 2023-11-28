@@ -20,6 +20,7 @@ import d.tmesaric.jadrijazadatak.presentation.ZadatakEvent
 import d.tmesaric.jadrijazadatak.presentation.ZadatakViewModel
 import d.tmesaric.jadrijazadatak.DetailsActivity
 import d.tmesaric.jadrijazadatak.data.ZadatakDB
+import d.tmesaric.jadrijazadatak.presentation.ZadatakState
 import d.tmesaric.jadrijazadatak.presentation.recycler_view.ZadatakAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,21 +35,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-       // val database = ZadatakDB.getDatabase(this, viewModel.viewModelScope)
         val rvZadatak = findViewById<RecyclerView>(R.id.rvZadatak)
         val btnAddZadatak = findViewById<Button>(R.id.btnAddZadatak)
 
         lifecycleScope.launch {
             viewModel.state.collect { state ->
-                adapter = ZadatakAdapter(state.zadaci,
-                    { zadatak ->
-                    val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-                    intent.putExtra("zadatak", zadatak)
-                    startActivity(intent) },
-
-                    { zadatak -> viewModel.onEvent(ZadatakEvent.DeleteZadatak(zadatak))},
-
-                )
+                setupRecyclerView(state)
                 rvZadatak.adapter = adapter
             }
         }
@@ -58,6 +50,19 @@ class MainActivity : AppCompatActivity() {
         btnAddZadatak.setOnClickListener {
             showPopup(this, adapter)
         }
+    }
+
+    private fun setupRecyclerView(state: ZadatakState) {
+        adapter = ZadatakAdapter(
+            state.zadaci,
+            { zadatak ->
+                val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+                intent.putExtra("zadatak", zadatak)
+                startActivity(intent)
+            },
+
+            { zadatak -> viewModel.onEvent(ZadatakEvent.DeleteZadatak(zadatak)) },
+        )
     }
 
     private fun showPopup(context: Context, adapter: ZadatakAdapter) {
