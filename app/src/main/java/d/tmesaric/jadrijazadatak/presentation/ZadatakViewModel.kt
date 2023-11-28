@@ -3,6 +3,7 @@ package d.tmesaric.jadrijazadatak.presentation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import d.tmesaric.jadrijazadatak.domain.model.Zadatak
 
 import d.tmesaric.jadrijazadatak.domain.use_case.ZadatakUseCases
 import d.tmesaric.jadrijazadatak.util.OrderType

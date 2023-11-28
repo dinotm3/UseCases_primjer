@@ -15,5 +15,6 @@ abstract class ZadatakDB : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "zadatak_db"
+
     }
 }

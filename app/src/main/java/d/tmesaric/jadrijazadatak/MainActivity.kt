@@ -12,12 +12,14 @@ import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import d.tmesaric.jadrijazadatak.domain.model.Zadatak
 import d.tmesaric.jadrijazadatak.presentation.ZadatakEvent
 import d.tmesaric.jadrijazadatak.presentation.ZadatakViewModel
 import d.tmesaric.jadrijazadatak.DetailsActivity
+import d.tmesaric.jadrijazadatak.data.ZadatakDB
 import d.tmesaric.jadrijazadatak.presentation.recycler_view.ZadatakAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+       // val database = ZadatakDB.getDatabase(this, viewModel.viewModelScope)
         val rvZadatak = findViewById<RecyclerView>(R.id.rvZadatak)
         val btnAddZadatak = findViewById<Button>(R.id.btnAddZadatak)
 
